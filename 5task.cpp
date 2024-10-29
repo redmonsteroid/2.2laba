@@ -1,5 +1,7 @@
 #include <iostream>
 
+using namespace std;
+
 struct Node {
     int value;
     Node* left;
@@ -12,12 +14,12 @@ class BinarySearchTree {
 private:
     Node* root;
 
-    // Вспомогательный метод для добавления узла
-    Node* addNode(Node* node, int value) {
+    
+    Node* addNode(Node* node, int value) { // добавление по правилам bst
         if (node == nullptr) {
             return new Node(value);
         }
-        if (value < node->value) {
+        if (value < node->value) { // меньше налево 
             node->left = addNode(node->left, value);
         } else if (value > node->value) {
             node->right = addNode(node->right, value);
@@ -25,16 +27,16 @@ private:
         return node;
     }
 
-    // Вспомогательный метод для вывода листьев дерева в порядке возрастания
+    
     void collectLeaves(Node* node) const {
         if (node == nullptr) return;
 
-        // Рекурсивно идем по левому и правому поддереву
-        collectLeaves(node->left);
+        
+        collectLeaves(node->left); // рекурсивно доходим до конца каждой половины 
 
-        // Если узел — лист, выводим его значение
+        
         if (node->left == nullptr && node->right == nullptr) {
-            std::cout << node->value << " ";
+            cout << node->value << " ";
         }
 
         collectLeaves(node->right);
@@ -43,16 +45,16 @@ private:
 public:
     BinarySearchTree() : root(nullptr) {}
 
-    // Метод для добавления элемента
+    
     void add(int value) {
         root = addNode(root, value);
     }
 
-    // Метод для вывода листьев в порядке возрастания
-    void printLeavesInOrder() const {
-        std::cout << "Leaves in ascending order: ";
+    
+    void printLeavesInOrder() {
+        cout << "Leaves: ";
         collectLeaves(root);
-        std::cout << std::endl;
+        cout << endl;
     }
 };
 
@@ -60,12 +62,11 @@ int main() {
     BinarySearchTree bst;
     int value;
 
-    std::cout << "Enter numbers to add to the tree (end with a non-integer): ";
-    while (std::cin >> value) {
+    cout << "Enter numbers to add to the tree (end with letter) ";
+    while (cin >> value) {
         bst.add(value);
     }
 
-    // Выводим листья в порядке возрастания
     bst.printLeavesInOrder();
 
     return 0;
